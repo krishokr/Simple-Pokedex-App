@@ -13,3 +13,7 @@ body {
     color: var(--font);
     background-color: var(--background);
 }
+
+#logo {
+    width: 3%;
+}
