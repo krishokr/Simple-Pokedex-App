@@ -1,19 +1,19 @@
 :root {
-    --background: #494545;
-    --font: #E9EAEC;
-    --primary: #E1341E;
-    --secondary: #32BF5C;
-    --tertiary: #ED901D;
-    --quarternary: #1ecbe1;
+  --background: #494545;
+  --font: #e9eaec;
+  --primary: #e1341e;
+  --secondary: #32bf5c;
+  --tertiary: #ed901d;
+  --quarternary: #1ecbe1;
 }
 
 body {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 2vw;
-    color: var(--font);
-    background-color: var(--background);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 2vw;
+  color: var(--font);
+  background-color: var(--background);
 }
 
 #logo {
-    width: 3%;
+  width: 3%;
 }
