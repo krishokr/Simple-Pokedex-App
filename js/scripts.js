@@ -31,11 +31,12 @@ let pokemonRepository = (function() {
     }
 })();
 
+// Adding pokemon to the pokemon repository
 pokemonRepository.add({name: 'Bulbasaur', height: 0.7, types: ['poison', 'grass']});
 pokemonRepository.add({name: 'Charizard', height: 1.7, types: ['fire', 'flying']});
 pokemonRepository.add({name: 'Squirtle', height: 0.5, types: ['water']})
 
-// Helper Functions
+// Display Pokemon Helper Functions
 let pokemonList = () => pokemonRepository.getAll();
 
 let getName = pokemon => pokemon.name;
