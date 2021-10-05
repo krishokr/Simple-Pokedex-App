@@ -69,7 +69,7 @@ function displayPokemonArray (pokemonList) {
 }
 
 //Displaying Pokemon on Site
-displayPokemonArray(pokemonList());r
+displayPokemonArray(pokemonList());
 
 
 
