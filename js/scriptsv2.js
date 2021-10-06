@@ -39,24 +39,34 @@ pokemonRepository.add({name: 'Squirtle', height: 0.5, types: ['water']});
 
 //Displaying Pokemon on Site
 (function() {
-    let pokemonList = pokemonRepository.getAll();
+    let pokemonRepositoryList = pokemonRepository.getAll();
 
-    function getNote(height) {
-        let note = '';
-        if (height > 1) {
-            note = 'So big!!'
-        }
-        return note;
-    };
+    function showDetails(pokemon) {
+        return console.log(pokemon);
+    }
 
-    return pokemonList.forEach(function(pokemon) {
-            let name = pokemon.name;
-            let height = pokemon.height;
-            let note = getNote(height);
-            
-            return document.write(`<br>${name} (Height: ${height}) ${note}<br>`);
-        });
+    function addListItem(pokemon) {
+        let pokemonUL = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');      
+        let pokemonButton = document.createElement('button');
+
+        //adding text and a class to the new button
+        pokemonButton.innerText = pokemon.name;
+        pokemonButton.classList.add('pokemon-button');
+        
+        //adding the pokemon button to the list item, and the list item to the pokemon unordered list
+        listItem.appendChild(pokemonButton);
+        pokemonUL.appendChild(listItem);
+
+        //adding event listener to print pokemon name in console
+        pokemonButton.addEventListener('click', function() {showDetails(pokemon)});
+    }
+
+    
+
+    return pokemonRepositoryList.forEach(function(pokemon) { 
+        addListItem(pokemon);
+        
+    });
+
 })();
-
-
-
