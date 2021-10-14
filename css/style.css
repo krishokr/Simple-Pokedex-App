@@ -37,4 +37,25 @@ ul.pokemon-list {
   list-style-type: none;
 }
 
+/* Modal Styling */
+.modal-container {
+  display: none;
+}
 
+.modal-container.is-visible {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.close-modal-button {
+  cursor: pointer;
+}
