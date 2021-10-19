@@ -31,10 +31,17 @@ let pokemonRepository = (function() {
     function showDetails(pokemon) { 
         loadDetails(pokemon).then(function() {
             //printing pokemon in console
-            console.log(pokemon);
+            // console.log(pokemon);
 
             //using other IIFE to show the modal upon clicking pokemon
-            pokemonModal.createModal(pokemon.name, pokemon.height, pokemon.imageUrl);
+            pokemonModal.createModal(pokemon.name, pokemon.height, pokemon.types, pokemon.imageUrl);
+            
+        }).catch(e => console.error(e))
+    }
+
+    function displayListItems(pokemon) {
+        loadDetails(pokemon).then(function() {
+            addListItem(pokemon);
         }).catch(e => console.error(e))
     }
 
@@ -43,10 +50,9 @@ let pokemonRepository = (function() {
         let pokemonUL = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
         listItem.classList.add('col-2');
-
-        // listItem.classList.add('list-group-item');
         
         let pokemonButton = document.createElement('button');
+
         //adding bootstrap classes & attributes
         pokemonButton.classList.add('btn');
         pokemonButton.classList.add('btn-primary');
@@ -54,8 +60,14 @@ let pokemonRepository = (function() {
         pokemonButton.setAttribute("data-target", ".modal");
 
         //adding text and a class to the new button
-        pokemonButton.innerText = pokemon.name;
+        pokemonButton.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
         pokemonButton.classList.add('pokemon-button');
+
+        //creating pokemon image html and adding image      
+        let imageUrl = pokemon.imageUrl;
+        let pokemonImage = document.createElement('img');
+        pokemonImage.src = imageUrl;   
+        pokemonButton.appendChild(pokemonImage);      
         
         //adding the pokemon button to the list item, and the list item to the pokemon unordered list
         listItem.appendChild(pokemonButton);
@@ -86,7 +98,8 @@ let pokemonRepository = (function() {
         getAll: getAll,
         add: add,
         loadList: loadList,
-        addListItem: addListItem
+        addListItem: addListItem,
+        displayListItems: displayListItems
     }
 })();
 
@@ -94,7 +107,7 @@ let pokemonRepository = (function() {
 //Displaying Pokemon on Site
 pokemonRepository.loadList().then(function() { //no parameter here since .loadList() doesn't have a return value
     pokemonRepository.getAll().forEach(function(pokemon) {
-        pokemonRepository.addListItem(pokemon);        
+        pokemonRepository.displayListItems(pokemon);       
     })
 })   
 
@@ -107,7 +120,16 @@ pokemonRepository.loadList().then(function() { //no parameter here since .loadLi
 //Code for Modals
 let pokemonModal = (function() {
 
-    function createModal(name, height, image) {
+    //Helper function that retrieves pokemon types from an array of objects and displays
+    function getPokemonTypes(typesObjectArray, pokemonTypes) {
+        let typesStringArray = [];
+        typesObjectArray.forEach(function(object) {    
+            typesStringArray.push(object.type.name);
+        })
+        return pokemonTypes.innerText = 'Types: ' + typesStringArray.join(', ');
+    }
+
+    function createModal(name, height, typesObjectArray, image) {
         //modal --> modal dialog --> modal content --> actual content
 
         //Adding pokemon name to modal
@@ -116,12 +138,15 @@ let pokemonModal = (function() {
 
         //Adding pokemon height to modal
         let pokemonHeight = document.querySelector('.pokemon-height');
-        pokemonHeight.innerText = height;
+        pokemonHeight.innerText = `Height: `+ height;
+
+        //Getting pokemon types
+        let pokemonTypes = document.querySelector('.pokemon-type');
+        getPokemonTypes(typesObjectArray, pokemonTypes);    
 
         //Adding pokemon image to modal
         let pokemonImage = document.querySelector('.pokemon-image');
-        pokemonImage.src = image;
-
+        pokemonImage.src = image; 
     }    
 
     return {
