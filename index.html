@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/stylev2.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
     <title>Pokedex</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="dist/style.css">
+    
+    
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark">
+        <nav class="navbar navbar-expand-md navbar-dark">
             
             <a href="#" class="navbar-brand h1">
                 <img class='' id="logo" src="/images/pokeball-logo-vector.svg" alt="A pokeball logo.">
-                <span>Pokedex</span>
+                <span class="brand-title" >Pokedex</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+
+            <button class="navbar-toggler col-12" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-compass"></i>
             </button>
+
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active">Home</a>
+                    <li class="nav-item-active">
+                        <a href="#" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link">Pokemon</a>
@@ -49,17 +54,30 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"></h5>
+                        <div class="modal-title modalTitleContainer">
+                            <h3 class="title"></h3>
+                            <h3 class="pokemon-id"></h3>
+                        </div>
+                        
                         <button type="button" class="close" data-dismiss="modal" aria-label="close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="pokemon-height-container">
-                            <p class="pokemon-height"></p>
-                        </div>
-                        <div class="pokemon-type-container">
-                            <p class="pokemon-type"></p>
+                    <div class="modal-body container">
+                        <div class="pokemon-types-container"></div>
+                        <div class="pokemon-details-container row">
+                            <div class="pokemon-abilities-container details-container">
+                                <h5 class="details-title">Abilities</h5>
+                                <div class="pokemon-abilities details-content"></div>
+                            </div>
+                            <div class="pokemon-height-container details-container">
+                                <h5 class="details-title">Height</h5>
+                                <p class="pokemon-height details-content"></p>
+                            </div>
+                            <div class="pokemon-weight-container details-container">
+                                <h5 class="details-title">Weight</h5>
+                                <p class="pokemon-weight details-content"></p>
+                            </div>
                         </div>
                         <div class="pokemon-image-container">
                             <img class="pokemon-image" src="">
@@ -77,7 +95,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src='js/promise-polyfill.js'></script>
         <script src='js/fetch-polyfill.js'></script>
-        <script src="js/scriptsv2.js"></script>
+        <script src="dist/script.js"></script>
     </strong>
 </body>
 </html>

@@ -7,6 +7,7 @@ let pokemonRepository = (function() {
         return fetch(apiUrl).then(function(response) {return response.json()}).then(function(json) {
             //results is a property in the json object that holds the name and url
             json.results.forEach(function(item) { 
+               
                 let pokemon = { //turns json object into real object
                     name: item.name,
                     detailsUrl: item.url
@@ -21,9 +22,13 @@ let pokemonRepository = (function() {
     function loadDetails(item) { 
         let url = item.detailsUrl; //there's an item parameter since need to get the details url from each pokemon
         return fetch(url).then(response=> response.json()).then(function(json) {
+            
             item.imageUrl = json.sprites.front_default;                                                
             item.height = json.height; 
             item.types = json.types;
+            item.abilities = json.abilities;
+            item.id = json.id;
+            item.weight = json.weight;
         }).catch (e => console.error(e)) //RETURNS A PROMISE!!
     }
 
@@ -34,7 +39,7 @@ let pokemonRepository = (function() {
             // console.log(pokemon);
 
             //using other IIFE to show the modal upon clicking pokemon
-            pokemonModal.createModal(pokemon.name, pokemon.height, pokemon.types, pokemon.imageUrl);
+            pokemonModal.createModal(pokemon.name, pokemon.height, pokemon.types, pokemon.imageUrl, pokemon.abilities, pokemon.id, pokemon.weight);
             
         }).catch(e => console.error(e))
     }
@@ -49,8 +54,12 @@ let pokemonRepository = (function() {
     function addListItem(pokemon) {
         let pokemonUL = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
-        listItem.classList.add('col-2');
-        
+        listItem.classList.add('col-12');
+        listItem.classList.add('col-lg-2');
+        listItem.classList.add('col-md-4');
+        listItem.classList.add('d-flex');
+        listItem.classList.add('justify-content-center');
+
         let pokemonButton = document.createElement('button');
 
         //adding bootstrap classes & attributes
@@ -121,32 +130,121 @@ pokemonRepository.loadList().then(function() { //no parameter here since .loadLi
 let pokemonModal = (function() {
 
     //Helper function that retrieves pokemon types from an array of objects and displays
-    function getPokemonTypes(typesObjectArray, pokemonTypes) {
-        let typesStringArray = [];
+    function getPokemonTypes(typesObjectArray) {
+        let typesArray = [];
         typesObjectArray.forEach(function(object) {    
-            typesStringArray.push(object.type.name);
+            typesArray.push(object.type.name);
         })
-        return pokemonTypes.innerText = 'Types: ' + typesStringArray.join(', ');
+        return typesArray;
     }
 
-    function createModal(name, height, typesObjectArray, image) {
+    function getTypeColor(typesArray) {
+        console.log(typesArray)
+        let pokemonTypesContainer = document.querySelector('.pokemon-types-container');
+        pokemonTypesContainer.innerHTML = '';
+
+        typesArray.forEach(function(type) {
+            //create a container
+            let typeContainer = document.createElement('div');
+
+            //all types have pokemon-type class for general styling
+            typeContainer.classList.add('pokemon-type');
+
+            //create h3 to hold type text
+            let typeElement = document.createElement('p');
+
+            //add type to typeElement
+            typeElement.innerText = type;
+            typeContainer.classList.add((type==='' ? 'normal':type));
+            
+            typeContainer.appendChild(typeElement);
+            
+            pokemonTypesContainer.appendChild(typeContainer);
+            
+        })
+        
+    }
+
+    function getAbilities(array) {
+        let abilitiesArray = [];
+        array.forEach(function(object) {
+            let ability = object.ability.name;
+            abilitiesArray.push(ability);
+        })
+        return abilitiesArray;
+    }
+
+    function formatString(string) {
+        let dashIndex = string.indexOf('-');
+
+        if (dashIndex !== -1) {
+            let firstString = string.slice(0,dashIndex);
+            let lastString = string.slice(dashIndex+1);
+        
+            let newFirstString = firstString.charAt(0).toUpperCase() + firstString.slice(1);
+            let newLastString = lastString.charAt(0).toUpperCase() + lastString.slice(1);
+            
+            return newFirstString + " " + newLastString;
+        }
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function displayAbilities(abilities) {
+        let pokemonAbilitiesContainer = document.querySelector('.pokemon-abilities');
+        pokemonAbilitiesContainer.innerHTML = '';
+        let abilitiesArray = getAbilities(abilities);
+
+        abilitiesArray.forEach(ability => {
+            let abilityContainer = document.createElement('p');
+            abilityContainer.innerText = formatString(ability);
+            pokemonAbilitiesContainer.appendChild(abilityContainer);
+        })
+
+    }
+
+    function getId(id) {      
+        if (id < 10) {
+            return `#00${id}`
+        } else if (id < 100) {
+            return `#0${id}`
+        } else {
+            return `#${id}`
+        }
+    }
+
+    function createModal(name, height, types, image, abilities, id, weight) {
         //modal --> modal dialog --> modal content --> actual content
 
         //Adding pokemon name to modal
-        let pokemonName = document.querySelector('.modal-title');
-        pokemonName.innerText = name;
+        let pokemonName = document.querySelector('.title');
+        pokemonName.innerText = name.charAt(0).toUpperCase() + name.slice(1);
 
         //Adding pokemon height to modal
         let pokemonHeight = document.querySelector('.pokemon-height');
-        pokemonHeight.innerText = `Height: `+ height;
+        pokemonHeight.innerText = height;
 
         //Getting pokemon types
-        let pokemonTypes = document.querySelector('.pokemon-type');
-        getPokemonTypes(typesObjectArray, pokemonTypes);    
+        let typesArray = getPokemonTypes(types);
+        //add background color for each type
+        getTypeColor(typesArray);
+        
 
         //Adding pokemon image to modal
         let pokemonImage = document.querySelector('.pokemon-image');
         pokemonImage.src = image; 
+
+        //Getting pokemon abilities
+        displayAbilities(abilities);
+
+        //Displaying id
+        let pokemonIdContainer = document.querySelector('.pokemon-id');
+        let formattedID = getId(id);
+        pokemonIdContainer.innerText = formattedID;
+
+        //Displaying Weight
+        let pokemonWeightContainer = document.querySelector('.pokemon-weight');
+        pokemonWeightContainer.innerText = weight;
+
     }    
 
     return {
