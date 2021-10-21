@@ -20,5 +20,9 @@ This project uses:
 3. JavaScript
 
 
+I used this website to help with modal design choices, especially type color, font size, pokemon details, and background color.
+https://www.pokemon.com/us/pokedex/
+
+
 
 
